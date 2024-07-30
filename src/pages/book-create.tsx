@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";
-import { Button, Checkbox, Container, Divider, NumberInput, TextInput } from "@mantine/core";
+import { Button, Checkbox, Container, Divider, NumberInput, TextInput, Select, Textarea } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
@@ -17,6 +17,9 @@ export default function BookCreatePage() {
       title: "",
       author: "",
       year: 2024,
+      detail: "",
+      synopsis: "",
+      category: "",
       is_published: false,
     },
 
@@ -24,6 +27,9 @@ export default function BookCreatePage() {
       title: isNotEmpty("กรุณาระบุชื่อหนังสือ"),
       author: isNotEmpty("กรุณาระบุชื่อผู้แต่ง"),
       year: isNotEmpty("กรุณาระบุปีที่พิมพ์หนังสือ"),
+      detail: isNotEmpty("กรุณาระบุรายละเอียดหนังสือ"),
+      synopsis: isNotEmpty("กรุณาระบุเรื่องย่อ"),
+      category: isNotEmpty("กรุณาระบุหมวดหมู่")
     },
   });
 
@@ -91,9 +97,24 @@ export default function BookCreatePage() {
               {...bookCreateForm.getInputProps("year")}
             />
 
-            {/* TODO: เพิ่มรายละเอียดหนังสือ */}
-            {/* TODO: เพิ่มเรื่องย่อ */}
-            {/* TODO: เพิ่มหมวดหมู่(s) */}
+            <Textarea
+              label="รายละเอียดหนังสือ"
+              placeholder="รายละเอียดหนังสือ"
+              {...bookCreateForm.getInputProps("detail")}
+            />
+
+            <TextInput
+              label="เรื่องย่อ"
+              placeholder="เรื่องย่อ"
+              {...bookCreateForm.getInputProps("synopsis")}
+            />
+
+            <Select
+              label="หมวดหมู่"
+              placeholder="หมวดหมู่"
+              data={['การศึกษา', 'นิยาย', 'ศิลปะ', 'ท่องเที่ยว']}
+              {...bookCreateForm.getInputProps("category")}
+            />
 
             <Checkbox
               label="เผยแพร่"
